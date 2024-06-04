@@ -1,0 +1,42 @@
+name: Process and Combine XML Files
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  process_xml:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'  # Specify the Python version you need
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install lxml
+
+    - name: Run process_xml.py
+      run: python process_xml.py
+
+    - name: Combine DITA files
+      run: |
+        echo "<root>" > combined.dita
+        cat XIincludes/*.dita >> combined.dita
+        echo "</root>" >> combined.dita
+
+    - name: Upload combined DITA file
+      uses: actions/upload-artifact@v2
+      with:
+        name: combined-dita
+        path: combined.dita
