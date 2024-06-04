@@ -11,7 +11,7 @@ def read_json(filename):
 def find_xml_files(directory):
     xml_files = []
     for root, dirs, files in os.walk(directory):
-        # print("directory :",directory)    
+        print("directory :",directory)    
         for file in files:
             if file.endswith('.xml'):
                 xml_files.append(os.path.join(root, file))
