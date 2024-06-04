@@ -43,7 +43,7 @@ jobs:
       run: |
         if ls XIincludes/*.dita 1> /dev/null 2>&1; then
           echo "<root>" > combined.dita
-          cat XIincludes/*.dita >> combined.dita
+          cat XIincludes/*.xml >> combined.dita
           echo "</root>" >> combined.dita
         else
           echo "No DITA files found in XIincludes directory."
