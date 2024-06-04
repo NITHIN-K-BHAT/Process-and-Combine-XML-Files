@@ -26,14 +26,29 @@ jobs:
         python -m pip install --upgrade pip
         pip install lxml
 
-    - name: Run createXiIncludeFiles.py
-      run: python createXiIncludeFiles.py
+    - name: Run process_xml.py
+      run: python process_xml.py
+
+    - name: Check XIincludes directory
+      run: |
+        if [ -d "XIincludes" ]; then
+          echo "XIincludes directory exists."
+          ls -l XIincludes
+        else
+          echo "XIincludes directory does not exist."
+          exit 1
+        fi
 
     - name: Combine DITA files
       run: |
-        echo "<root>" > combined.dita
-        cat XIincludes/*.dita >> combined.dita
-        echo "</root>" >> combined.dita
+        if ls XIincludes/*.dita 1> /dev/null 2>&1; then
+          echo "<root>" > combined.dita
+          cat XIincludes/*.dita >> combined.dita
+          echo "</root>" >> combined.dita
+        else
+          echo "No DITA files found in XIincludes directory."
+          exit 1
+        fi
 
     - name: Upload combined DITA file
       uses: actions/upload-artifact@v2
