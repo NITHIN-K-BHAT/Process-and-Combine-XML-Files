@@ -26,8 +26,8 @@ jobs:
         python -m pip install --upgrade pip
         pip install lxml
 
-    - name: Run process_xml.py
-      run: python process_xml.py
+    - name: Run createXiIncludeFiles.py.py
+      run: python createXiIncludeFiles.py
 
     - name: Check XIincludes directory
       run: |
