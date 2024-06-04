@@ -65,6 +65,7 @@ def main():
     json_data = read_json('slsdocid.json')
     xml_files = find_xml_files('directory (1)')
     print("xml_file :::",xml_files)
+    output_folder = 'XIincludes'
     for item in json_data:
         slsdocid = item['slsdocid']
         # print("slsdocid :",slsdocid)
@@ -72,7 +73,7 @@ def main():
             if item['file_name'] == os.path.basename(xml_file):  # Check if the 'file_name' matches the XML file name
                 tag_data, tag_element = find_tag_data(xml_file, slsdocid)
                 if tag_data:
-                    dita_file_path = create_dita_file(slsdocid, tag_data, 'XIincludes')
+                    dita_file_path = create_dita_file(slsdocid, tag_data, output_folder)
                     # Update XML
                     update_xml(xml_file, dita_file_path, tag_element)
 
